@@ -1,0 +1,26 @@
+.user-redux-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+.preview-image-container {
+  .label-upload {
+    padding: 6px;
+    border-radius: 4px;
+    background-color: #ddd;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
+  .preview-image {
+    height: 50px;
+    width: 100%;
+    border: 1px solid #ddd;
+    background: center center no-repeat;
+    background-size: contain;
+    cursor: pointer;
+  }
+}
+}

@@ -1,0 +1,39 @@
+.modal-container {
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+
+        .modal-header {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+
+            .left {
+                font-size: 20px;
+                font-weight: 400;
+                color: #ccc;
+            }
+
+            .right {
+                float: right;
+                cursor: pointer;
+            }
+        }
+
+        .modal-body {
+            padding: 15px;
+            height: 100%;
+
+            label {
+                font-size: 18px;
+            }
+        }
+
+        .modal-footer {
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+    }
+}

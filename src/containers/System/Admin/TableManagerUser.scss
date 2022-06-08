@@ -1,0 +1,55 @@
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+
+
+  td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #ddd;
+  }
+
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04aa6d;
+    color: #fff;
+  }
+
+  .btn-delete {
+    width: 50px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #eb0f0f;
+
+    &:hover {
+      background-color:transparent;
+      color: gold;
+      opacity: 0.8;
+    }
+  }
+
+  .btn-edit {
+    width: 50px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: orange;
+
+    &:hover {
+      background-color:transparent;
+      color: yellow;
+      opacity: 0.8;
+    }
+  }
+}

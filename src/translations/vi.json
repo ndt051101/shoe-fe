@@ -1,0 +1,72 @@
+{
+    "homeheader": {
+        "specialty": "Chuyên khoa",
+        "searchdoctor": "Tìm bác sĩ theo chuyên khoa",
+        "welcome": "Xin chào mày, "
+    },
+    "menu": {
+        "admin": {
+            "manage-user": "Người dùng",
+            "manage-admin": "Quản lý admin",
+            "manage-customer": "Quản lý người dùng",
+            "category": "Danh mục",
+            "manage-category": "Quản lí danh mục",
+            "product": "Sản phẩm",
+            "manage-product": "Quản lí sản phẩm",
+            "order": "Đơn hàng",
+            "manage-order-processing": "Đơn hàng chờ duyệt",
+            "manage-order-delivering": "Đơn hàng đang giao",
+            "manage-order-delivered": "Đơn hàng đã giao"
+        }
+    },
+    "manager-user": {
+        "add": "Thêm mới người dùng",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "first-name": "Tên",
+        "last-name": "Họ",
+        "phone-number": "Số điện thoại",
+        "address": "Địa chỉ",
+        "role": "Vai trò",
+        "submit": "Xác nhận",
+        "edit": "Lưu thay đổi"
+    },
+    "home-page": {
+        "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
+        "more-infos": "Xem thêm",
+        "search": "Tìm kiếm",
+        "specialty-poplular": "Chuyên khoa phổ biến"
+    },
+    "manage-schedule": {
+        "title": "Quản lí khám bệnh của bác sĩ"
+    },
+    "patient": {
+        "detail-doctor": {
+            "schedule": "Lịch khám",
+            "no-schedule": "Bác sĩ không có lịch hẹn trong thời gian này, vui lòng chọn thời gian khác !",
+            "choose": "Chọn",
+            "book-free": "và đặt (miễn phí)"
+        },
+        "extra-infor-doctor": {
+            "text-address": "Địa chỉ khám",
+            "price": "Giá khám: ",
+            "detail": "Xem chi tiết",
+            "payment": "Người bệnh có thể thanh toán chi phí bằng hình thức: ",
+            "hide-price": "Ẩn bảng giá"
+        },
+        "booking-modal": {
+            "title": "Gửi thông tin liên lạc | Tel: 0123456789",
+            "fullName": "Họ và tên",
+            "phoneNumber": "Số điện thoại",
+            "email": "Địa chỉ Email",
+            "description": "Mô tả nội dung",
+            "btnConfirm": "Xác nhận",
+            "btnCancel": "Hủy"
+        }
+    },
+    "admin": {
+        "manager-customer": {
+            "title": "Danh sách khách hàng"
+        }
+    }
+}
