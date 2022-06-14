@@ -6,9 +6,11 @@ import "./ManageOrder.scss";
 import { FormattedMessage } from "react-intl";
 import ModalOrder from "./Modal/ModalOrder";
 import ModalEditOrder from "./Modal/ModalEditOrder";
-import { getOrderByStatus, orderDelivered } from "../../../services/orderService";
+import {
+    getOrderByStatus,
+    orderDelivered,
+} from "../../../services/orderService";
 import { toast } from "react-toastify";
-
 
 class OrderDelivered extends Component {
     constructor(props) {
@@ -23,34 +25,33 @@ class OrderDelivered extends Component {
 
     async componentDidMount() {
         try {
-            const data = await getOrderByStatus(2)
-            if(data) {
+            const data = await getOrderByStatus(2);
+            if (data) {
                 this.setState({
                     ...this.state,
-                    arrOrder: [...data]
-                })
-                console.log(data)
+                    arrOrder: [...data],
+                });
+                console.log(data);
             }
-        }
-        catch(error) {}
+        } catch (error) {}
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        if (prevProps.project !== this.props.project) {
-            this.setState({
-                arrOrder: this.props.project,
-            });
-        }
-        if (prevProps.project !== this.props.project) {
-            this.setState({
-                name: "",
-                note: "",
-                imageBase64: "",
-                descriptionHTML: "",
-                descriptionMarkdown: "",
-                action: CRUD_ACTIONS.CREATE,
-            });
-        }
+        // if (prevProps.project !== this.props.project) {
+        //     this.setState({
+        //         arrOrder: this.props.project,
+        //     });
+        // }
+        // if (prevProps.project !== this.props.project) {
+        //     this.setState({
+        //         name: "",
+        //         note: "",
+        //         imageBase64: "",
+        //         descriptionHTML: "",
+        //         descriptionMarkdown: "",
+        //         action: CRUD_ACTIONS.CREATE,
+        //     });
+        // }
     }
 
     render() {
@@ -83,7 +84,7 @@ class OrderDelivered extends Component {
                                     </tr>
                                     {arrOrder && arrOrder.length > 0 ? (
                                         arrOrder.map((item, index) => {
-                                            console.log(item)
+                                            console.log(item);
                                             return (
                                                 <tr key={index}>
                                                     <td>{item.code}</td>

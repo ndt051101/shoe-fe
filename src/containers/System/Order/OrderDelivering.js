@@ -6,9 +6,11 @@ import "./ManageOrder.scss";
 import { FormattedMessage } from "react-intl";
 import ModalOrder from "./Modal/ModalOrder";
 import ModalEditOrder from "./Modal/ModalEditOrder";
-import { getOrderByStatus, orderDelivered } from "../../../services/orderService";
+import {
+    getOrderByStatus,
+    orderDelivered,
+} from "../../../services/orderService";
 import { toast } from "react-toastify";
-
 
 class OrderDelivering extends Component {
     constructor(props) {
@@ -23,55 +25,55 @@ class OrderDelivering extends Component {
 
     async componentDidMount() {
         try {
-            const data = await getOrderByStatus(1)
-            if(data) {
+            const data = await getOrderByStatus(1);
+            if (data) {
                 this.setState({
                     ...this.state,
-                    arrOrder: [...data]
-                })
-                console.log(data)
+                    arrOrder: [...data],
+                });
+                console.log(data);
             }
-        }
-        catch(error) {}
+        } catch (error) {}
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        if (prevProps.project !== this.props.project) {
-            this.setState({
-                arrOrder: this.props.project,
-            });
-        }
-        if (prevProps.project !== this.props.project) {
-            this.setState({
-                name: "",
-                note: "",
-                imageBase64: "",
-                descriptionHTML: "",
-                descriptionMarkdown: "",
-                action: CRUD_ACTIONS.CREATE,
-            });
-        }
+        // if (prevProps.project !== this.props.project) {
+        //     this.setState({
+        //         arrOrder: this.props.project,
+        //     });
+        // }
+        // if (prevProps.project !== this.props.project) {
+        //     this.setState({
+        //         name: "",
+        //         note: "",
+        //         imageBase64: "",
+        //         descriptionHTML: "",
+        //         descriptionMarkdown: "",
+        //         action: CRUD_ACTIONS.CREATE,
+        //     });
+        // }
     }
 
     handleDeliveredOrder = async (id) => {
         try {
-            const data = await orderDelivered(id)
+            const data = await orderDelivered(id);
 
-            if(data?.success === true) {
-                const newArrOrder = this.state.arrOrder.filter(item => item._id !== id)
+            if (data?.success === true) {
+                const newArrOrder = this.state.arrOrder.filter(
+                    (item) => item._id !== id
+                );
 
                 this.setState({
                     ...this.state,
-                    arrOrder: [...newArrOrder]
-                })
+                    arrOrder: [...newArrOrder],
+                });
 
                 toast.success("SUCCESS!");
             }
-        }
-        catch(error) {
+        } catch (error) {
             toast.error("FAILED!");
         }
-    }
+    };
 
     toggleModal = () => {
         this.setState({
@@ -133,7 +135,7 @@ class OrderDelivering extends Component {
                                     </tr>
                                     {arrOrder && arrOrder.length > 0 ? (
                                         arrOrder.map((item, index) => {
-                                            console.log(item)
+                                            console.log(item);
                                             return (
                                                 <tr key={index}>
                                                     <td>{item.code}</td>
@@ -142,7 +144,9 @@ class OrderDelivering extends Component {
                                                     <td>
                                                         <button
                                                             onClick={() =>
-                                                                this.handleDeliveredOrder(item._id)
+                                                                this.handleDeliveredOrder(
+                                                                    item._id
+                                                                )
                                                             }
                                                             className="btn-edit"
                                                         >

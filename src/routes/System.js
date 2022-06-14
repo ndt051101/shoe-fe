@@ -47,11 +47,11 @@ class System extends Component {
                                 component={OrderDelivered}
                             />
 
-                            <Route
+                            {/* <Route
                                 component={() => {
                                     return <Redirect to={systemMenuPath} />;
                                 }}
-                            />
+                            /> */}
                         </Switch>
                     </div>
                 </div>
