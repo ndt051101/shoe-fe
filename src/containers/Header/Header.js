@@ -24,9 +24,7 @@ class Header extends Component {
         let menu = [];
         if (userInfo) {
             const role = userInfo.role;
-            if (role === USER_ROLE.ADMIN) {
-                menu = adminMenu;
-            }
+            menu = adminMenu;
         }
         this.setState({
             menuApp: menu,

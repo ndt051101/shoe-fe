@@ -36,14 +36,19 @@ const postVerifyBookAppointment = (data) => {
 };
 
 const createNewProduct = (data) => {
-    return axios.post(`/api/product`, data, {
+    return axios.post(`/api/admin/product`, data, {
         headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: localStorage.getItem('token')
         },
     });
 };
 const getAllProduct = () => {
-    return axios.get(`/api/product/getProduct`);
+    return axios.get(`/api/admin/product`, {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    });
 };
 
 const getDetailProductById = (id) => {
@@ -54,19 +59,22 @@ const getProductByTechnologyId = (id) => {
 };
 
 const editProductService = (data) => {
-    return axios.put("/api/product/edit", data, {
+    return axios.put("/api/admin/product/edit", data, {
         headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: localStorage.getItem('token')
         },
     });
 };
 
 const deleteProductService = (id) => {
-    return axios.delete("/api/product/delete", {
-        data: {
-            _id: id,
-        },
-    });
+    return axios.delete(`/api/admin/product/delete?_id=${ id }`, 
+        {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        }
+    );
 };
 
 const createNewProject = (data) => {
@@ -93,23 +101,41 @@ const getDetailProjectById = (id) => {
 };
 
 const createNewCategory = (data) => {
-    return axios.post(`/api/category`, data);
+    return axios.post(`/api/admin/category`, data, 
+    {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    }
+    );
 };
 
 const getAllCategory = () => {
-    return axios.get(`/api/category`);
+    return axios.get(`/api/admin/category`, {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    });
 };
 
 const editCategoryService = (data) => {
-    return axios.put("/api/category/edit", data);
+    return axios.put("/api/admin/category/edit", data, 
+    {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    }
+    );
 };
 
 const deleteCategoryService = (id) => {
-    return axios.delete("/api/category/delete", {
-        data: {
-            _id: id,
-        },
-    });
+    return axios.delete(`/api/admin/category/delete?_id=${ id }`, 
+    {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    }
+    );
 };
 
 const postSendRemedy = (data) => {

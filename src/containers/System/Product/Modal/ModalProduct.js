@@ -79,7 +79,7 @@ class ModalProduct extends Component {
         const data = new FormData();
 
         const ArrSize = new Function("return [" + this.state.size + "];")();
-        const ArrColor = this.state.color.split(",");
+        const ArrColor = this.state.color.split(", ");
 
         data.append("name", this.state.name);
         data.append("price", this.state.price);
