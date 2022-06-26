@@ -45,7 +45,6 @@ export const fetchAllUsersStart = () => {
     return async (dispatch, getState) => {
         try {
             const res = await getAllUsers();
-            console.log("Res:", res.data);
             if (res) {
                 dispatch(fetchAllUsersSuccess(res.data.reverse()));
             }

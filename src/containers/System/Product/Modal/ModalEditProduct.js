@@ -86,9 +86,14 @@ class ModalEditProduct extends Component {
         const isValid = this.checkValidateInput();
         if (!isValid) return;
 
-        console.log(1, this.state.color)
         const ArrSize = new Function("return [" + this.state.size + "];")();
-        const ArrColor = this.state.color.split(", ");
+        let ArrColor = this.state.color;
+
+        if (ArrColor.constructor === Array) {
+            ArrColor = this.state.color;
+        } else {
+            ArrColor = this.state.color.split(", ");
+        }
 
         const data = new FormData();
         data.append("_id", this.state._id);

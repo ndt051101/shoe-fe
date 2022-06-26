@@ -19,7 +19,6 @@ class ModalProduct extends Component {
             color: "",
             categoryArr: [],
             category: "",
-            defaultCategory: "",
         };
     }
 
@@ -31,6 +30,7 @@ class ModalProduct extends Component {
         if (prevProps.allCategory !== this.props.allCategory) {
             this.setState({
                 categoryArr: this.props.allCategory,
+                category: this.props.allCategory[0]._id,
             });
         }
     }
