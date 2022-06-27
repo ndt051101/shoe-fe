@@ -9,8 +9,24 @@ import ModalEditOrder from "./Modal/ModalEditOrder";
 import {
     getOrderByStatus,
     orderDelivering,
+    searchOrder
 } from "../../../services/orderService";
 import { toast } from "react-toastify";
+
+
+
+
+
+let timeOut
+
+const deBounce = (func, delay) => {
+    return (...args) => {
+        if(timeOut) clearTimeout(timeOut)
+        timeOut = setTimeout(() => {
+            func.apply(null, args)
+        }, delay)
+    }
+}
 
 class OrderProcessing extends Component {
     constructor(props) {
@@ -20,6 +36,7 @@ class OrderProcessing extends Component {
             isOpenModal: false,
             isOpenEditModal: false,
             orderEdit: {},
+            search: ''
         };
     }
 
@@ -31,28 +48,37 @@ class OrderProcessing extends Component {
                     ...this.state,
                     arrOrder: [...data],
                 });
-                console.log(data);
             }
         } catch (error) {}
     }
 
-    async componentDidUpdate(prevProps, prevState) {
-        // if (prevProps.project !== this.props.project) {
-        //     this.setState({
-        //         arrOrder: this.props.project,
-        //     });
-        // }
-        // if (prevProps.project !== this.props.project) {
-        //     this.setState({
-        //         name: "",
-        //         note: "",
-        //         imageBase64: "",
-        //         descriptionHTML: "",
-        //         descriptionMarkdown: "",
-        //         action: CRUD_ACTIONS.CREATE,
-        //     });
-        // }
+    handleSearch = async (value) => {
+        try {
+            const res = await searchOrder(value, 0)
+
+            if(res?.success) {
+                this.setState({
+                    ...this.state,
+                    arrOrder: [...res.data]
+                })
+            }
+        }
+        catch(error) {
+            console.log(error.response)
+        }
     }
+
+    handleOnchangeSearch = (event) => {
+        const value = event.target.value
+        this.setState(
+            {
+                search: value
+            }
+        );
+        this.deBounceSearch(value.trim())
+    };
+
+    deBounceSearch = deBounce(this.handleSearch, 500)
 
     handleConfirmOrder = async (id) => {
         try {
@@ -75,53 +101,26 @@ class OrderProcessing extends Component {
         }
     };
 
-    toggleModal = () => {
-        this.setState({
-            isOpenModal: !this.state.isOpenModal,
-        });
-    };
-    toggleEditModal = () => {
-        this.setState({
-            isOpenEditModal: !this.state.isOpenEditModal,
-        });
-    };
-
-    editProject = (project) => {
-        this.setState({
-            isOpenEditModal: true,
-            orderEdit: project,
-        });
-    };
-
-    handleEditModal = (project) => {
-        this.props.editAProject(project);
-        this.setState({
-            isOpenEditModal: false,
-        });
-    };
-
-    handleDelete = (project) => {
-        this.props.deleteAProject(project._id);
-    };
-
     render() {
-        const { arrOrder, isOpenModal, isOpenEditModal, orderEdit } =
-            this.state;
+        const { arrOrder, search } = this.state;
         return (
             <div className="manage-order-container">
                 <div className="ms-title">Quản lí đơn hàng</div>
-                <ModalOrder
-                    isOpenModal={isOpenModal}
-                    toggleModal={this.toggleModal}
-                />
-                {isOpenEditModal && (
-                    <ModalEditOrder
-                        isOpenEditModal={isOpenEditModal}
-                        orderEdit={orderEdit}
-                        toggleEditModal={this.toggleEditModal}
-                        handleEditModal={this.handleEditModal}
-                    />
-                )}
+
+                <div className="input-group" style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
+                    <div className="form-outline">
+                        <input 
+                            type="search" 
+                            className="form-control" 
+                            placeholder="Search by code"
+                            value={search}
+                            onChange={(event) =>
+                                this.handleOnchangeSearch(event)
+                            }
+                        />
+                    </div>
+                </div>
+
                 <div className="manage-order-body">
                     <div className="row">
                         <div className="col-12">
@@ -135,7 +134,6 @@ class OrderProcessing extends Component {
                                     </tr>
                                     {arrOrder && arrOrder.length > 0 ? (
                                         arrOrder.map((item, index) => {
-                                            console.log(item);
                                             return (
                                                 <tr key={index}>
                                                     <td>{item.code}</td>
@@ -151,16 +149,6 @@ class OrderProcessing extends Component {
                                                             className="btn-edit"
                                                         >
                                                             <i className="fas fa-check"></i>
-                                                        </button>
-                                                        <button
-                                                            onClick={() =>
-                                                                this.handleDelete(
-                                                                    item
-                                                                )
-                                                            }
-                                                            className="btn-delete"
-                                                        >
-                                                            <i className="fas fa-trash"></i>
                                                         </button>
                                                     </td>
                                                 </tr>

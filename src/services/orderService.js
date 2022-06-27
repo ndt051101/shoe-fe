@@ -24,8 +24,17 @@ const orderDelivered = (id) => {
     });
 }
 
+const searchOrder = (code, status) => {
+    return axios.get(`/api/admin/order/search?code=${ code }&status=${ status }`, {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    });
+}
+
 export {
     getOrderByStatus,
     orderDelivering,
-    orderDelivered
+    orderDelivered,
+    searchOrder
 }

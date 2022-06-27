@@ -9,8 +9,23 @@ import ModalEditOrder from "./Modal/ModalEditOrder";
 import {
     getOrderByStatus,
     orderDelivered,
+    searchOrder
 } from "../../../services/orderService";
 import { toast } from "react-toastify";
+
+
+
+
+let timeOut
+
+const deBounce = (func, delay) => {
+    return (...args) => {
+        if(timeOut) clearTimeout(timeOut)
+        timeOut = setTimeout(() => {
+            func.apply(null, args)
+        }, delay)
+    }
+}
 
 class OrderDelivered extends Component {
     constructor(props) {
@@ -20,6 +35,7 @@ class OrderDelivered extends Component {
             isOpenModal: false,
             isOpenEditModal: false,
             orderEdit: {},
+            search: ''
         };
     }
 
@@ -36,42 +52,54 @@ class OrderDelivered extends Component {
         } catch (error) {}
     }
 
-    async componentDidUpdate(prevProps, prevState) {
-        // if (prevProps.project !== this.props.project) {
-        //     this.setState({
-        //         arrOrder: this.props.project,
-        //     });
-        // }
-        // if (prevProps.project !== this.props.project) {
-        //     this.setState({
-        //         name: "",
-        //         note: "",
-        //         imageBase64: "",
-        //         descriptionHTML: "",
-        //         descriptionMarkdown: "",
-        //         action: CRUD_ACTIONS.CREATE,
-        //     });
-        // }
+    handleSearch = async (value) => {
+        try {
+            const res = await searchOrder(value, 2)
+
+            if(res?.success) {
+                this.setState({
+                    ...this.state,
+                    arrOrder: [...res.data]
+                })
+            }
+        }
+        catch(error) {
+            console.log(error.response)
+        }
     }
 
+    handleOnchangeSearch = (event) => {
+        const value = event.target.value
+        this.setState(
+            {
+                search: value
+            }
+        );
+        this.deBounceSearch(value.trim())
+    };
+
+    deBounceSearch = deBounce(this.handleSearch, 500)
+
     render() {
-        const { arrOrder, isOpenModal, isOpenEditModal, orderEdit } =
-            this.state;
+        const { arrOrder, search } = this.state;
         return (
             <div className="manage-order-container">
                 <div className="ms-title">Đơn hàng đã giao</div>
-                <ModalOrder
-                    isOpenModal={isOpenModal}
-                    toggleModal={this.toggleModal}
-                />
-                {isOpenEditModal && (
-                    <ModalEditOrder
-                        isOpenEditModal={isOpenEditModal}
-                        orderEdit={orderEdit}
-                        toggleEditModal={this.toggleEditModal}
-                        handleEditModal={this.handleEditModal}
-                    />
-                )}
+
+                <div className="input-group" style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 20 }}>
+                    <div className="form-outline">
+                        <input 
+                            type="search" 
+                            className="form-control" 
+                            placeholder="Search by code"
+                            value={search}
+                            onChange={(event) =>
+                                this.handleOnchangeSearch(event)
+                            }
+                        />
+                    </div>
+                </div>
+
                 <div className="manage-order-body">
                     <div className="row">
                         <div className="col-12">

@@ -7,6 +7,21 @@ import "react-markdown-editor-lite/lib/index.css";
 
 import ModalProduct from "./Modal/ModalProduct";
 import ModalEditProduct from "./Modal/ModalEditProduct";
+import { searchProduct } from "../../../services/userService";
+
+
+
+
+let timeOut
+
+const deBounce = (func, delay) => {
+    return (...args) => {
+        if(timeOut) clearTimeout(timeOut)
+        timeOut = setTimeout(() => {
+            func.apply(null, args)
+        }, delay)
+    }
+}
 
 class ManageProduct extends Component {
     constructor(props) {
@@ -16,6 +31,7 @@ class ManageProduct extends Component {
             arrProduct: [],
             isOpenEditModal: false,
             productEdit: {},
+            search: ''
         };
     }
 
@@ -42,6 +58,37 @@ class ManageProduct extends Component {
             });
         }
     }
+
+    handleSearch = async (value) => {
+        try {
+            const res = await searchProduct(value)
+
+            console.log(res)
+
+            if(res?.success) {
+                console.log(res.data)
+                this.setState({
+                    ...this.state,
+                    arrProduct: [...res.data]
+                })
+            }
+        }
+        catch(error) {
+            console.log(error.response)
+        }
+    }
+
+    handleOnchangeSearch = (event) => {
+        const value = event.target.value
+        this.setState(
+            {
+                search: value
+            }
+        );
+        this.deBounceSearch(value.trim())
+    };
+
+    deBounceSearch = deBounce(this.handleSearch, 500)
 
     toggleModal = () => {
         this.setState({
@@ -74,17 +121,33 @@ class ManageProduct extends Component {
     };
 
     render() {
-        const { isOpenModal, arrProduct, isOpenEditModal, productEdit } =
+        const { isOpenModal, arrProduct, isOpenEditModal, productEdit, search } =
             this.state;
         return (
             <div className="manage-product-container">
-                <button
-                    className="btn-success btn-lg my-3"
-                    onClick={this.toggleModal}
-                >
-                    THÊM SẢN PHẨM
-                </button>
                 <div className="ms-title">Quản lí sản phẩm</div>
+
+                <div className="input-group" style={{ flex: 1, alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                        <button
+                            className="btn-success btn-lg my-3"
+                            onClick={this.toggleModal}
+                        >
+                            THÊM SẢN PHẨM
+                        </button>
+                    </div>
+                    <div className="form-outline">
+                        <input 
+                            type="search" 
+                            className="form-control" 
+                            placeholder="Search by code"
+                            value={search}
+                            onChange={(event) =>
+                                this.handleOnchangeSearch(event)
+                            }
+                        />
+                    </div>
+                </div>
 
                 <ModalProduct
                     isOpenModal={isOpenModal}

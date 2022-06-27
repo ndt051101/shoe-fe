@@ -1,25 +1,33 @@
 import axios from "../axios";
 
 const handleLogin = (email, password) => {
-    return axios.post("/api/auth/admin/signin", { email, password });
+    return axios.post("/api/admin/signin", { email, password });
 };
 
 const getAllUsers = () => {
-    return axios.get("/api/auth");
+    return axios.get("/api/admin/user", {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    });
 };
 const getAllCustomers = (id) => {
     return axios.get(`/api/get-all-customers?id=${id}`);
 };
 
 const createNewUserService = (data) => {
-    return axios.post("/api/auth/", data);
+    return axios.post("/api/admin/user", data, {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    });
 };
 
 const deleteUserService = (id) => {
-    return axios.delete("/api/auth/delete", {
-        data: {
-            _id: id,
-        },
+    return axios.delete(`/api/admin/user?_id=${ id }`, {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
     });
 };
 
@@ -45,6 +53,14 @@ const createNewProduct = (data) => {
 };
 const getAllProduct = () => {
     return axios.get(`/api/admin/product`, {
+        headers: {
+            Authorization: localStorage.getItem('token')
+        }
+    });
+};
+
+const searchProduct = (name) => {
+    return axios.get(`/api/admin/product/search?name=${ name }`, {
         headers: {
             Authorization: localStorage.getItem('token')
         }
@@ -153,6 +169,7 @@ export {
     postVerifyBookAppointment,
     createNewProduct,
     getAllProduct,
+    searchProduct,
     getDetailProductById,
     getProductByTechnologyId,
     editProductService,
